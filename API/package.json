@@ -1,6 +1,6 @@
 {
-    "name": "ru_sobral",
-    "version": "0.0.0",
+    "name": "rusobral",
+    "version": "1.0.0",
     "private": true,
     "scripts": {
         "start": "DEBUG=express:* node .tmp/app",
