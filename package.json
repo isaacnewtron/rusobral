@@ -1,19 +1,27 @@
 {
   "name": "rusobral",
   "version": "1.0.0",
-  "description": "O sistema tem como objetivo principal captar o feedback dos estudantes matriculados na Universidade Federal do Ceará, campus Sobral, que utilizam o restaurante universitário a fim de que a nutricionista responsável possa tomar decisões em tempo hábil para melhorar a qualidade do serviço oferecido. A partir dessa necessidade foi elaborada a proposta de uma plataforma web.",
+  "private": true,
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+      "start": "DEBUG=express:* node ./API/public/app",
+      "dev": "node ./API/.tmp/app"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/isaacnewtron/rusobral.git"
+  "dependencies": {
+      "bcrypt": "^1.0.2",
+      "body-parser": "^1.17.1",
+      "cors": "^2.8.3",
+      "dotenv": "^4.0.0",
+      "express": "~4.15.2",
+      "http-status-codes": "^1.1.6",
+      "jsonwebtoken": "^7.4.0",
+      "moment": "^2.18.1",
+      "moment-timezone": "^0.5.13",
+      "mongoose": "^4.10.4",
+      "mongoose-paginate": "^5.0.3",
+      "validator": "^7.0.0"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/isaacnewtron/rusobral/issues"
-  },
-  "homepage": "https://github.com/isaacnewtron/rusobral#readme"
+  "devDependencies": {
+      "babel-preset-es2015": "^6.24.1",
+      "gulp-babel": "^6.1.2"
+  }
 }
