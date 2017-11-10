@@ -39,4 +39,4 @@ MongoFactory.getInstance()
 setupMoment();
 setupDefaultAdminUser();
 
-app.listen(process.env.PORT, () => console.log('Your project is running on port', process.env.PORT));
+app.listen(process.env.PORT || 3030 , () => console.log('Your project is running on port', process.env.PORT || 3030));
