@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "start": "DEBUG=express:* node ./API/.tmp/app",
-    "dev": "node ./API/.tmp/app"
+    "start": "node node_modules/gulp/bin/gulp && DEBUG=express:* node ./API/.tmp/app",
+    "dev": "node node_modules/gulp/bin/gulp && node ./API/.tmp/app"
   },
   "dependencies": {
     "bcrypt": "^1.0.2",
