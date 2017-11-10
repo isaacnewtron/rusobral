@@ -1,1 +1,2 @@
-web: node  ./API/public/app.js
+web: node node_modules/gulp/bin/gulp
+web: npm run start
