@@ -1,1 +1,1 @@
-web: node  API/public/app.js
+web: node  ./API/public/app.js
