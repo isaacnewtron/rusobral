@@ -16,7 +16,7 @@ export class MongoFactory {
 
     static connect() {
         mongoose.Promise = global.Promise;
-        mongoose.connect(`mongodb://${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`);
+        mongoose.connect(`mongodb://admin:admin.ru@ds249575.mlab.com:49575/heroku_415734f6`);
         this.instance = mongoose.connection;
     }
 }
