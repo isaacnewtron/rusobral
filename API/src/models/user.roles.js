@@ -1,0 +1,11 @@
+export const UserRoles = [
+    'ADMINISTRATOR',
+    'DEFAULT_ADMINISTRATOR',
+    'STUDENT'
+];
+
+export const UserRole = {
+    ADMINISTRATOR: 'ADMINISTRATOR',
+    DEFAULT_ADMINISTRATOR: 'DEFAULT_ADMINISTRATOR',
+    STUDENT: 'STUDENT'
+};
