@@ -62,6 +62,6 @@ _database.MongoFactory.getInstance().on('error', console.error).on('disconnect',
 (0, _config.setupMoment)();
 (0, _config.setupDefaultAdminUser)();
 
-app.listen(process.env.SV_PORT, function () {
-    return console.log('Your project is running on port', process.env.SV_PORT);
+app.listen(process.env.PORT, function () {
+    return console.log('Your project is running on port', process.env.PORT);
 });
