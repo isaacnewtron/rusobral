@@ -5,7 +5,7 @@ var babel = require('gulp-babel');
 gulp.task('babel', function babelCompile() {
     return gulp.src(['src/app.js', 'src/**/*.js'])
         .pipe(babel())
-        .pipe(gulp.dest('./.tmp'));
+        .pipe(gulp.dest('./public'));
 });
 
 gulp.task('default', ['babel']);

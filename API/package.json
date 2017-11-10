@@ -3,7 +3,7 @@
     "version": "1.0.0",
     "private": true,
     "scripts": {
-        "start": "DEBUG=express:* node .tmp/app",
+        "start": "DEBUG=express:* node ./public/app",
         "dev": "node .tmp/app"
     },
     "dependencies": {
