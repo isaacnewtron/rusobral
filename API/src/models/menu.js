@@ -19,6 +19,21 @@ let menuSchema = new mongoose.Schema({
     }
 });
 
+menuSchema.set('toJSON', { 
+    getters: true,
+    virtuals: true,
+    transform: function(doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+    }
+})
+
+menuSchema.statics.findMenu = (query) => {
+    return Menu.find(query)
+        .populate
+}
+
 let Menu = mongoose.model('Menu', menuSchema);
 
 export { Menu };

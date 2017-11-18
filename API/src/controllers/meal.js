@@ -12,7 +12,7 @@ export default class MealController {
             Meal
                 .find(filter)
                 .exec()
-                .then(user => res.json(user))
+                .then(meal => res.json(meal))
                 .catch(next);
         } catch(e) {
             next(e);
@@ -29,7 +29,7 @@ export default class MealController {
             Meal
                 .find(filter)
                 .exec()
-                .then(user => res.json(user))
+                .then(meal => res.json(meal))
                 .catch(next);
         } catch(e) {
             next(e);

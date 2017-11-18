@@ -14,6 +14,7 @@ import AuthRouter from './routes/auth';
 import UserRouter from './routes/user';
 import ItemRouter from './routes/item';
 import MealRouter from './routes/meal';
+import MenuRouter from './routes/menu';
 
 config();
 
@@ -31,6 +32,7 @@ app.use('/api/auth', AuthRouter);
 app.use('/api/users', UserRouter);
 app.use('/api/item', ItemRouter);
 app.use('/api/meal', MealRouter);
+app.use('/api/menu', MenuRouter);
 
 
 // Error handling
