@@ -57,16 +57,11 @@ export default class ItemController {
     static put(req, res, next) {
         try {
             let id = req.params.id;
-            let updatedUser = req.body;
-            User
-                .findById(id)
+            let updatedItem = req.body;
+            Item
+                .findByIdAndUpdate(id, updatedItem,{ new: true })
                 .exec()
-                .then(user => {
-                    let restriction = user.hasSystemRestriction(updatedUser.role);
-                    if(restriction) throw restriction;
-                    return User.update({ _id: id }, updatedUser, { new: true });     
-                })
-                .then(user => res.json(user))
+                .then(item => res.json(item))
                 .catch(next)
         } catch(e) {
             next(e);
@@ -76,13 +71,9 @@ export default class ItemController {
     static delete(req, res, next) {
         try {
             let id = req.params.id;
-            User
-                .findById(id)
+            Item
+                .findByIdAndRemove(id)
                 .exec()
-                .then(user => {
-                    if(user.isDefaultAdmin()) throw new ExceptionFactory(EXCEPTION.CANNOT_DEACTIVE_DEFAULT_ADMIN);
-                    return User.update({ _id: id }, { actived: false }, { new: true });  
-                })
                 .then(() => res.sendStatus(200))
                 .catch(next)
         } catch(e) {
