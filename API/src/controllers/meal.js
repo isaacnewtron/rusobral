@@ -1,15 +1,15 @@
-import { Item } from '../models/item';
+import { Meal } from '../models/meal';
 
 import { EXCEPTION } from '../constants';
 import { ExceptionFactory } from '../util';
 
-export default class ItemController {
+export default class MealController {
 
     static getList(req, res, next) {
         try {
             let filter
             req.query.type != undefined ? filter={type: req.query.type } : filter={}
-            Item
+            Meal
                 .find(filter)
                 .exec()
                 .then(user => res.json(user))
@@ -18,11 +18,16 @@ export default class ItemController {
             next(e);
         }
     }
-
-    static getId(req, res, next) {
+    
+    static getInterval(req, res, next) {
         try {
-            Item
-                .findById(req.params.id)
+            let filter
+            let interval = req.query.interval || 7
+            let initialDate = new Date(req.params.date)
+            let endDate = new Date(initialDate.getTime() + interval * 86400000 );
+            req.params.date != undefined ? filter = {date: {$gte: initialDate , $lt: endDate}} : filter={}
+            Meal
+                .find(filter)
                 .exec()
                 .then(user => res.json(user))
                 .catch(next);
@@ -30,27 +35,13 @@ export default class ItemController {
             next(e);
         }
     }
-
+    
     static post(req, res, next) {
         try {
-            let item = new Item(req.body);
-            item.save()
-                .then(item => res.json(item))
+            let meal = new Meal(req.body);
+            meal.save()
+                .then(meal => res.json(meal))
                 .catch(next);
-        } catch(e) {
-            next(e);
-        }
-    }
-
-    static put(req, res, next) {
-        try {
-            let id = req.params.id;
-            let updatedItem = req.body;
-            Item
-                .findByIdAndUpdate(id, updatedItem,{ new: true })
-                .exec()
-                .then(item => res.json(item))
-                .catch(next)
         } catch(e) {
             next(e);
         }
@@ -59,7 +50,7 @@ export default class ItemController {
     static delete(req, res, next) {
         try {
             let id = req.params.id;
-            Item
+            Meal
                 .findByIdAndRemove(id)
                 .exec()
                 .then(() => res.sendStatus(200))

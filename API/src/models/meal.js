@@ -28,6 +28,16 @@ let mealSchema = new mongoose.Schema({
     }
 });
 
+mealSchema.set('toJSON', { 
+    getters: true,
+    virtuals: true,
+    transform: function(doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+    }
+})
+
 let Meal = mongoose.model('Meal', mealSchema);
 
 export { Meal };

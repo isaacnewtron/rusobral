@@ -13,6 +13,7 @@ import { MongoFactory } from './database';
 import AuthRouter from './routes/auth';
 import UserRouter from './routes/user';
 import ItemRouter from './routes/item';
+import MealRouter from './routes/meal';
 
 config();
 
@@ -29,6 +30,8 @@ app.use(middleware.authFilter);
 app.use('/api/auth', AuthRouter);
 app.use('/api/users', UserRouter);
 app.use('/api/item', ItemRouter);
+app.use('/api/meal', MealRouter);
+
 
 // Error handling
 app.use(middleware.errorLogger);
