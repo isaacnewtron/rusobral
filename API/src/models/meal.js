@@ -30,4 +30,4 @@ let mealSchema = new mongoose.Schema({
 
 let Meal = mongoose.model('Meal', mealSchema);
 
-export { Mea, mealType };
+export { Meal };

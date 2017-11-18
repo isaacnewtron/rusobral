@@ -6,13 +6,23 @@ import { ExceptionFactory } from '../util';
 const Types = mongoose.Schema.Types;
 
 const itemTypes = [
-    'LAUNCH',
-    'DINNER'
+    'PRINCIPAL',
+    'VEGETARIANO',
+    'SALADA',
+    'GUARNICAO',
+    'ACOMPANHAMENTO',
+    'SUCO',
+    'SOBREMESA'
 ];
 
 export const itemType = {
-    LAUNCH: 'LAUNCH',
-    DINNER: 'DINNER'
+    PRINCIPAL:'PRINCIPAL',
+    VEGETARIANO:'VEGETARIANO',
+    SALADA:'SALADA',
+    GUARNICAO:'GUARNICAO',
+    ACOMPANHAMENTO:'ACOMPANHAMENTO',
+    SUCO:'SUCO',
+    SOBREMESA:'SOBREMESA'
 };
 
 let itemSchema = new mongoose.Schema({
@@ -21,8 +31,7 @@ let itemSchema = new mongoose.Schema({
         require: true   
     },
     description: {
-        type: String,
-        require: true   
+        type: String   
     },
     type: {
         type: String,
@@ -31,6 +40,16 @@ let itemSchema = new mongoose.Schema({
         enum: itemTypes,
     }
 });
+
+itemSchema.set('toJSON', { 
+    getters: true,
+    virtuals: true,
+    transform: function(doc, ret) {
+        ret.id = ret._id;
+        delete ret._id;
+        delete ret.__v;
+    }
+})
 
 let Item = mongoose.model('Item', itemSchema);
 

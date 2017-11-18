@@ -12,6 +12,7 @@ import { MongoFactory } from './database';
 
 import AuthRouter from './routes/auth';
 import UserRouter from './routes/user';
+import ItemRouter from './routes/item';
 
 config();
 
@@ -27,6 +28,7 @@ app.use(middleware.authFilter);
 // API routes
 app.use('/api/auth', AuthRouter);
 app.use('/api/users', UserRouter);
+app.use('/api/item', ItemRouter);
 
 // Error handling
 app.use(middleware.errorLogger);
