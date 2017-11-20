@@ -27,11 +27,13 @@ const mealFormate = [
         $project: {
             _id: 0,
             "mealId": "$_id",
-            "itens._id": 1,
-            "itens.name": 1,
-            "itens.description": 1
-        }
-     }
+            "itens" : {
+                "id": "$_id",
+                "name": 1,
+                "description": 1
+                }
+            }
+    }
 ]
 
 let menuSchema = new mongoose.Schema({
@@ -52,6 +54,8 @@ menuSchema.set('toJSON', {
     virtuals: true,
     transform: function(doc, ret) {
         delete ret.__v;
+        ret.id = ret._id
+        delete  ret._id
     }
 })
 
