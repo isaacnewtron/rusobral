@@ -1,14 +1,41 @@
-import { Menu } from '../models/menu';
+import { Menu, mealFormate } from '../models/menu';
 
 import { EXCEPTION } from '../constants';
 import { ExceptionFactory } from '../util';
 
 export default class MenuController {
-
+    
     static getList(req, res, next) {
         try {
             Menu
-                .find({})
+                .aggregate([
+                    {
+                        $lookup:
+                           {
+                              from: "items",
+                              localField: "itemId",
+                              foreignField: "_id",
+                              as: "itens"
+                          }
+                     },
+                     {
+                        $group: { 
+                            _id: '$mealId', 
+                            itens: { 
+                                $push:  { $arrayElemAt: [ "$itens", 0 ] }
+                            } 
+                        }
+                    },
+                    { 
+                        $project: {
+                            _id: 0,
+                            "mealId": "$_id",
+                            "itens._id": 1,
+                            "itens.name": 1,
+                            "itens.description": 1
+                        }
+                     }
+                ])
                 .exec()
                 .then(menu => res.json(menu))
                 .catch(next);
@@ -20,12 +47,16 @@ export default class MenuController {
     static getMeal(req, res, next) {
         try {
             let filter
-            req.params.meal != undefined ? filter = {meal:  req.params.meal} : filter={}
+            filter = mealFormate
+            filter.push({ $match: { _id: req.params.meal }}) 
+            console.log( req.params.meal)
             Menu
-                .find(filter)
-                .exec()
-                .then(menu => res.json(menu))
-                .catch(next);
+            .aggregate([
+                { "$match": { _id: req.params.meal }}
+            ])
+            .exec()
+            .then(menu => res.json(menu))
+            .catch(next);
         } catch(e) {
             next(e);
         }
@@ -35,19 +66,18 @@ export default class MenuController {
         try {
             let menus = []
             for(let item of req.body.itens){
-                let menu = new Menu({
+                let menu = {
                         itemId: item,
                         mealId: req.body.meal
-                })
-
-                menu.save()
-                .then(menu => {
-                    //console.log(menu.toJSON())                    
-                })
-                .catch(next);
-                menus.push(menu.toJSON())
+                }
+                menus.push(menu)
+                
             }
-            res.json(menus)            
+            Menu.insertMany(menus)
+            .then(menu => {
+                res.json(menu)               
+            })
+            .catch(next);          
         } catch(e) {
             next(e);
         }

@@ -5,6 +5,34 @@ import { ExceptionFactory } from '../util';
 
 const Types = mongoose.Schema.Types;
 
+const mealFormate = [
+    {
+        $lookup:
+           {
+              from: "items",
+              localField: "itemId",
+              foreignField: "_id",
+              as: "itens"
+          }
+     },
+     {
+        $group: { 
+            _id: '$mealId', 
+            itens: { 
+                $push:  { $arrayElemAt: [ "$itens", 0 ] }
+            } 
+        }
+    },
+    { 
+        $project: {
+            _id: 0,
+            "mealId": "$_id",
+            "itens._id": 1,
+            "itens.name": 1,
+            "itens.description": 1
+        }
+     }
+]
 
 let menuSchema = new mongoose.Schema({
     itemId: {
@@ -23,8 +51,6 @@ menuSchema.set('toJSON', {
     getters: true,
     virtuals: true,
     transform: function(doc, ret) {
-        ret.id = ret._id;
-        delete ret._id;
         delete ret.__v;
     }
 })
@@ -36,4 +62,4 @@ menuSchema.statics.findMenu = (query) => {
 
 let Menu = mongoose.model('Menu', menuSchema);
 
-export { Menu };
+export { Menu, mealFormate };
