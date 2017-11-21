@@ -20,13 +20,17 @@ const mealFormate = [
             _id: '$mealId', 
             itens: { 
                 $push:  { $arrayElemAt: [ "$itens", 0 ] }
-            } 
+            },
+            menuIds: { 
+                $push:  "$_id"
+            }
         }
     },
     { 
         $project: {
             _id: 0,
             "mealId": "$_id",
+            "menuIds": 1,
             "itens" : {
                 "id": "$_id",
                 "name": 1,
