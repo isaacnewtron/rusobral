@@ -1,3 +1,5 @@
+import mongoose from 'mongoose';
+
 import { Menu, mealFormate } from '../models/menu';
 
 import { EXCEPTION } from '../constants';
@@ -19,9 +21,16 @@ export default class MenuController {
     
     static getMeal(req, res, next) {
         try {
-             Menu
-            .find({mealId: req.params.meal})
-            .populate('itemId')
+            let filter = mealFormate
+            filter.push(
+                { 
+                    $match : { 
+                        "mealId": mongoose.Types.ObjectId(req.params.meal)
+                    }
+                }
+            )
+            Menu
+            .aggregate(filter)
             .exec()
             .then(menu => res.json(menu))
             .catch(next);
