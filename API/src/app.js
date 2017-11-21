@@ -15,6 +15,7 @@ import UserRouter from './routes/user';
 import ItemRouter from './routes/item';
 import MealRouter from './routes/meal';
 import MenuRouter from './routes/menu';
+import GradeRouter from './routes/grade';
 
 config();
 
@@ -33,6 +34,7 @@ app.use('/api/users', UserRouter);
 app.use('/api/item', ItemRouter);
 app.use('/api/meal', MealRouter);
 app.use('/api/menu', MenuRouter);
+app.use('/api/grade', GradeRouter);
 
 
 // Error handling
