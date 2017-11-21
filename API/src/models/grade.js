@@ -16,7 +16,7 @@ let gradeSchema = new mongoose.Schema({
         ref: 'User',
         required: true,
     },
-    mealId: {
+    menuId: {
         type: Types.ObjectId,
         ref: 'Menu',
         required: true,
