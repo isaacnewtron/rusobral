@@ -16,6 +16,7 @@ import ItemRouter from './routes/item';
 import MealRouter from './routes/meal';
 import MenuRouter from './routes/menu';
 import GradeRouter from './routes/grade';
+import CommentRouter from './routes/comment';
 
 config();
 
@@ -35,6 +36,7 @@ app.use('/api/item', ItemRouter);
 app.use('/api/meal', MealRouter);
 app.use('/api/menu', MenuRouter);
 app.use('/api/grade', GradeRouter);
+app.use('/api/comment', CommentRouter);
 
 
 // Error handling
