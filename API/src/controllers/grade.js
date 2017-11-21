@@ -1,36 +1,69 @@
+import mongoose from 'mongoose';
+
 import { Grade } from '../models/grade';
+import { MongoFactory } from '../database';
 
 import { EXCEPTION } from '../constants';
 import { ExceptionFactory } from '../util';
 
 export default class GradeController {
     
-    static getList(req, res, next) {
-        try {
-            Grade
-                .aggregate(mealFormate)
-                .exec()
-                .then(Grade => res.json(Grade))
-                .catch(next);
-        } catch(e) {
-
-            next(e);
-        }
-    }
     
-    static getMeal(req, res, next) {
+    static list(req, res, next) {
         try {
              Grade
-            .find({mealId: req.params.meal})
-            .populate('itemId')
+            .aggregate( [
+                {
+                    $group: { 
+                        _id: '$menuId', 
+                        value: { 
+                            $avg: "$value"
+                        }
+                    }
+                },
+                { 
+                    $project: {
+                        _id: 0,
+                        "id": "$_id",
+                        value: 1
+                    }
+                }
+            ])
             .exec()
-            .then(Grade => res.json(Grade))
+            .then(grade => res.json(grade))
             .catch(next);
         } catch(e) {
             next(e);
         }
     }
     
+    static getGradesMenu(req, res, next) {
+        try {
+             Grade
+            .aggregate([
+                { 
+                    $match : { 
+                        "menuId": mongoose.Types.ObjectId(req.params.menu)
+                    }
+                },
+                { 
+                    $project: {
+                        _id: 0,
+                        "id": "$_id",
+                        value: 1,
+                        userId: 1,
+                        menuId: 1,
+                    }
+                }
+            ])
+            .exec()
+            .then(grade => res.json(grade))
+            .catch(next);
+        } catch(e) {
+            next(e);
+        }
+    }
+
     static post(req, res, next) {
         try {
             let grades = []
@@ -53,13 +86,24 @@ export default class GradeController {
         }
     }
 
+    static put(req, res, next) {
+        try {
+            let id = req.params.id;
+            let updatedGrade = req.body;
+            Grade
+                .findByIdAndUpdate(id, updatedGrade, { new: true })
+                .exec()
+                .then(item => res.json(item))
+                .catch(next)
+        } catch(e) {
+            next(e);
+        }
+    }
+
     static delete(req, res, next) {
         try {
-            req.params.meal;
-            let filter
-            req.query.id != undefined ? filter = {mealId: req.params.meal, _id: req.query.id} : filter = {mealId: req.params.meal}
             Grade
-                .remove(filter)
+                .findByIdAndRemove(req.params.id)
                 .exec()
                 .then(() => res.sendStatus(200))
                 .catch(next)

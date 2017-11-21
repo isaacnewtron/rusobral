@@ -23,6 +23,16 @@ let gradeSchema = new mongoose.Schema({
     }
 });
 
+gradeSchema.set('toJSON', { 
+    getters: true,
+    virtuals: true,
+    transform: function(doc, ret) {
+        delete ret.__v;
+        ret.id = ret._id
+        delete  ret._id
+    }
+})
+
 let Grade = mongoose.model('Grade', gradeSchema);
 
 export { Grade };
