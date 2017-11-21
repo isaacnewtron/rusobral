@@ -16,7 +16,7 @@ export class MongoFactory {
 
     static connect() {
         mongoose.Promise = global.Promise;
-        mongoose.connect(process.env.BD_CONNECTION);
+        mongoose.connect(process.env.BD_CONNECTION,  { useMongoClient: true });
         this.instance = mongoose.connection;
     }
 }
