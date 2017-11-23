@@ -17,6 +17,7 @@ import MealRouter from './routes/meal';
 import MenuRouter from './routes/menu';
 import GradeRouter from './routes/grade';
 import CommentRouter from './routes/comment';
+import PollRouter from './routes/poll';
 
 config();
 
@@ -37,7 +38,7 @@ app.use('/api/meal', MealRouter);
 app.use('/api/menu', MenuRouter);
 app.use('/api/grade', GradeRouter);
 app.use('/api/comment', CommentRouter);
-
+app.use('/api/poll', PollRouter);
 
 // Error handling
 app.use(middleware.errorLogger);
