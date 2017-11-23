@@ -18,6 +18,8 @@ import MenuRouter from './routes/menu';
 import GradeRouter from './routes/grade';
 import CommentRouter from './routes/comment';
 import PollRouter from './routes/poll';
+import OptionRouter from './routes/option';
+import VoteRouter from './routes/vote';
 
 config();
 
@@ -39,6 +41,8 @@ app.use('/api/menu', MenuRouter);
 app.use('/api/grade', GradeRouter);
 app.use('/api/comment', CommentRouter);
 app.use('/api/poll', PollRouter);
+app.use('/api/option', OptionRouter);
+app.use('/api/vote', VoteRouter);
 
 // Error handling
 app.use(middleware.errorLogger);

@@ -23,6 +23,16 @@ let voteSchema = new mongoose.Schema({
     }
 });
 
+voteSchema.set('toJSON', { 
+    getters: true,
+    virtuals: true,
+    transform: function(doc, ret) {
+        delete ret.__v;
+        ret.id = ret._id
+        delete  ret._id
+    }
+})
+
 let Vote = mongoose.model('Vote', voteSchema);
 
 export { Vote };

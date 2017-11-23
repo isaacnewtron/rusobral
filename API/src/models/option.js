@@ -22,6 +22,16 @@ let optionSchema = new mongoose.Schema({
     }
 });
 
+optionSchema.set('toJSON', { 
+    getters: true,
+    virtuals: true,
+    transform: function(doc, ret) {
+        delete ret.__v;
+        ret.id = ret._id
+        delete  ret._id
+    }
+})
+
 let Option = mongoose.model('Option', optionSchema);
 
 export { Option };
