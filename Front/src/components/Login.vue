@@ -29,7 +29,7 @@
               </v-container>
               <v-layout row>
                 <v-spacer></v-spacer>
-                <v-btn class="secondary" href='#/cadastrar'>Cadastrar</v-btn>
+                <v-btn class="raised" href='#/cadastrar'>Cadastrar</v-btn>
                 <v-btn class="primary" @click="entrar()">Entrar</v-btn>
               </v-layout>
             </v-flex>
@@ -66,7 +66,7 @@
     }),
     methods: {
       entrar() {
-        if(username === 'offline'){
+        if(this.username === 'offline'){
           this.$cookie.set('token','táoff',{ expires: '1D' });
           this.$router.push("Dashboard");
           return;
