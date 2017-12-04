@@ -66,7 +66,7 @@
     }),
     methods: {
       entrar() {
-        if(username === 'offline'){
+        if(this.username === 'offline'){
           this.$cookie.set('token','táoff',{ expires: '1D' });
           this.$router.push("Dashboard");
           return;
