@@ -30,7 +30,7 @@
               <v-layout row>
                 <v-spacer></v-spacer>
                 <v-btn class="secondary" href='#/cadastrar'>Cadastrar</v-btn>
-                <v-btn class="primary" href='#/dashboard'>Entrar</v-btn>
+                <v-btn class="primary" @click="entrar()">Entrar</v-btn>
               </v-layout>
             </v-flex>
           </v-layout>
@@ -52,9 +52,11 @@
 </style>
 
 <script>
+  import AuthService from '@/domain/Auth/AuthService'
 
   export default {
     created(){
+      this.service = new AuthService(this.$resource);
     },
     data:() => ({
       e1: true,
@@ -64,9 +66,22 @@
     }),
     methods: {
       entrar() {
-        if(username === 'admin' && password === 'admin'){
-
+        if(username === 'offline'){
+          this.$cookie.set('token','táoff',{ expires: '1D' });
+          this.$router.push("Dashboard");
+          return;
         }
+        this.service.authenticate(this.username, this.password).then(response => {
+          if (response.status == 200) {
+            this.$cookie.set('token',response.body.token,{ expires: '1D' });
+            this.$router.push("Dashboard");
+          }else {
+            alert('Tente novamente, credenciais inválidas.')
+          }
+        }, err => {
+          console.log(err)
+          alert(err.body.message);
+        })
       }
     }
   }

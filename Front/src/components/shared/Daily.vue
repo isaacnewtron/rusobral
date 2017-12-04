@@ -8,10 +8,10 @@
         >
         <template slot="items" slot-scope="props">
         <td class="text-xs-right">{{ props.item.principal}}</td>
-        <td class="text-xs-right">{{ props.item.vegetariano }}</td>
-        <td class="text-xs-right">{{ props.item.salada }}</td>
-        <td class="text-xs-right">{{ props.item.guarnicao }}</td>
         <td class="text-xs-right">{{ props.item.acompanhamento }}</td>
+        <td class="text-xs-right">{{ props.item.vegetariano }}</td>
+        <td class="text-xs-right">{{ props.item.guarnicao }}</td>
+        <td class="text-xs-right">{{ props.item.salada }}</td>
         <td class="text-xs-right">{{ props.item.suco }}</td>
         <td class="text-xs-right">{{ props.item.sobremesa }}</td>
         </template>
@@ -32,6 +32,11 @@
 
 <script>
 export default {
+  props:{
+      items: {
+        type: Object
+      }
+  },
   data:() => ({
     headers: [
         {
@@ -39,62 +44,14 @@ export default {
         sortable: false,
         value: 'principal'
         },
-        { text: 'Vegetariano',sortable:false, value: 'vegetariano' },
-        { text: 'Salada',sortable:false, value: 'salada' },
-        { text: 'Guarnicao',sortable:false, value: 'guarnicao' },
         { text: 'Acompanhamento',sortable:false, value: 'acompanhamento' },
+        { text: 'Vegetariano',sortable:false, value: 'vegetariano' },
+        { text: 'Guarnicao',sortable:false, value: 'guarnicao' },
+        { text: 'Salada',sortable:false, value: 'salada' },
         { text: 'Suco',sortable:false, value: 'suco' },
         { text: 'Sobremesa',sortable:false, value: 'sobremesa' }
-    ],
-    items: [
-        {
-            value: false,
-            principal: 'Opção 1',
-            vegetariano: 'Opção 1',
-            salada:'Opção 1',
-            guarnicao:'Opção 1',
-            acompanhamento:'Opção 1',
-            suco:'Opção 1',
-            sobremesa:'Opção 1'
-        },{
-            value: false,
-            principal: 'Opção 1',
-            vegetariano: 'Opção 1',
-            salada:'Opção 1',
-            guarnicao:'Opção 1',
-            acompanhamento:'Opção 1',
-            suco:'Opção 1',
-            sobremesa:'Opção 1'
-        },{
-            value: false,
-            principal: 'Opção 1',
-            vegetariano: 'Opção 1',
-            salada:'Opção 1',
-            guarnicao:'Opção 1',
-            acompanhamento:'Opção 1',
-            suco:'Opção 1',
-            sobremesa:'Opção 1'
-        },{
-            value: false,
-            principal: 'Opção 1',
-            vegetariano: 'Opção 1',
-            salada:'Opção 1',
-            guarnicao:'Opção 1',
-            acompanhamento:'Opção 1',
-            suco:'Opção 1',
-            sobremesa:'Opção 1'
-        },{
-            value: false,
-            principal: 'Opção 1',
-            vegetariano: 'Opção 1',
-            salada:'Opção 1',
-            guarnicao:'Opção 1',
-            acompanhamento:'Opção 1',
-            suco:'Opção 1',
-            sobremesa:'Opção 1'
-        }
-        
     ]
+    
   }),
   created(){
     

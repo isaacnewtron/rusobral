@@ -14,22 +14,33 @@ Vue.use(VueCookie);
 
 
 Vue.use(VueResource)
-    //Vue.http.options.root =
+Vue.http.options.root = 'https://rusobral.herokuapp.com/api'
 
-// Vue.http.interceptors.push(function(request, next) {
+Vue.http.interceptors.push(function(request, next) {
 
-//     // modify headers
-//     //request.headers.set('X-Auth-Token', this.$cookie.get('token'));
+    // modify headers
+    request.headers.set('X-Auth-Token', this.$cookie.get('token'));
 
-//     next();
-// });
+    next();
+});
 
 Vue.use(Vuetify)
 Vue.config.productionTip = false
 
-// router.beforeEach(function(to, from, next) {
-//     
-// });
+router.beforeEach(function(to, from, next) {
+    let token = Vue.cookie.get('token');
+    let logged = !!token;
+    console.log(logged)
+    if (!logged && to.name !== 'Login') {
+        if(to.name === 'Register'){
+            next()
+        }else{
+            next('/login');
+        }
+    }else{
+        next();
+    }
+});
 
 
 /* eslint-disable no-new */
@@ -37,5 +48,10 @@ new Vue({
     el: '#app',
     router,
     template: '<App/>',
-    components: { App }
+    components: { App },
+    localStorage: {
+        token: {
+            type: String
+        }
+    }
 })

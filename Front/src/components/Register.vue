@@ -17,23 +17,23 @@
                 <v-layout column>
                   <v-text-field
                     label= "Nome"
-                    v-model="nome"
+                    v-model="user.name"
                     required
                   ></v-text-field>
                   <v-text-field
                     label= "Matricula"
-                    v-model="matricula"
+                    v-model="user.username"
                     required
                   ></v-text-field>
                   <v-text-field
                     label= "Email"
-                    v-model="email"
+                    v-model="user.email"
                     :rules="[rules.email]"
                     required
                   ></v-text-field>
                   <v-text-field
                     label="Digite sua senha"
-                    v-model="password"
+                    v-model="user.password"
                     :append-icon="e1 ? 'visibility' : 'visibility_off'"
                     :append-icon-cb="() => (e1 = !e1)"
                     :type="e1 ? 'password' : 'text'"
@@ -43,7 +43,7 @@
               </v-container>
               <v-layout row>
                 <v-spacer></v-spacer>
-                <v-btn class="primary" href='#/dashboard'>Cadastrar</v-btn>
+                <v-btn class="primary" @click="cadastrar()">Cadastrar</v-btn>
               </v-layout>
             </v-flex>
           </v-layout>
@@ -66,9 +66,11 @@
 
 <script>
 
+  import UserService from '@/domain/User/UserService'
+
   export default {
     created(){
-     
+      this.service = new UserService(this.$resource);
     },
     data:() => ({
       e1: true,
@@ -82,14 +84,30 @@
         }
       },
       title: 'Pesquisa Restaurante Universitário',
-      password: '',
-      nome: '',
-      email: '',
-      matricula: ''
+      user: {
+        password: '',
+        name: '',
+        email: '',
+        username: '',
+        actived: true,
+        displayName: name,
+        role: 'ADMINISTRATOR'
+      }
     }),
     methods: {
       cadastrar(){
-        
+        this.service.save(this.user).then(response => {
+          if (response.status == 200) {
+            console.log(response)
+            this.$cookie.set('token',response.body.token,{ expires: '1D' });
+            this.$router.push("Dashboard");
+          }else {
+            alert('Tente novamente, credenciais inválidas.')
+          }
+        }, err => {
+          console.log(err)
+          alert(err.body.message);
+        })
       }
     }
   }
