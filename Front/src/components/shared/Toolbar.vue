@@ -6,7 +6,7 @@
     <v-spacer></v-spacer>
     <v-spacer></v-spacer>
     
-    <v-btn flat icon href="#/login">
+    <v-btn flat icon @click="sair()">
       <v-icon>exit_to_app</v-icon>
     </v-btn>
   </v-toolbar>
@@ -42,6 +42,10 @@
           default:
             return 'Cardápio Completo';
         }
+      },
+      sair(){
+        this.$cookie.delete('token');
+        this.$router.push('Login');
       }
     }
 }

@@ -57,6 +57,8 @@
 <script>
 export default {
   data:() => ({
+      email: '',
+      message: ''
     
   }),
   created(){
