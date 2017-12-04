@@ -1,10 +1,10 @@
-import { ExceptionFactory, isPublic } from '../util';
+import { ExceptionFactory, isPublic, isUserRouter } from '../util';
 import { EXCEPTION } from '../constants/exceptions';
 
 import { User } from '../models/user';
 
 export function authFilter(req, res, next) {
-    if(isPublic(req)) {
+    if(isPublic(req) || isUserRouter(req)) {
         next();
         return;
     }

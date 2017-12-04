@@ -1,9 +1,9 @@
 import { verify } from 'jsonwebtoken';
-import { ExceptionFactory, isPublic } from '../util';
+import { ExceptionFactory, isPublic, isUserRouter } from '../util';
 import { EXCEPTION } from '../constants/exceptions';
 
 export function tokenFilter(req, res, next) {
-    if(isPublic(req)) {
+    if(isPublic(req) || isUserRouter(req)) {
         next();
         return;
     }
